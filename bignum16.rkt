@@ -45,7 +45,7 @@
      ((zero? (car n))
       (if (null? (cdr n))
 	  (eopl:error "cero no tiene sucessor")
-	  (cons (- 16 1) (predecessor (cdr n)))
+	  (cons 15 (predecessor (cdr n)))
           )
       )
       (else (cons (- (car n) 1) (cdr n)))
@@ -60,6 +60,10 @@
     (if (is-zero? x)
         y
         (successor (suma (predecessor x) y)))))
+
+;prueba
+(suma '(1 1) '(1 1))
+(suma '(0 1) '(1 1))
 
 ;; resta:
 ;; Propósito:
