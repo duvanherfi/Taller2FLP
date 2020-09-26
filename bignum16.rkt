@@ -11,11 +11,19 @@
   (lambda ()
     '()))
 
+;prueba
+;(zero)
+;---------------------------------------------------------
 ;; is-zero?:
 ;; Propósito:
 (define is-zero?
   (lambda (n)
     (null? n)))
+
+;prueba
+;
+;
+;----------------------------------------------------------
 
 ;; successor:
 ;; Propósito:
@@ -32,6 +40,10 @@
         )
     )
   )
+;prueba
+;
+;
+;-------------------------------------------------------------------
 
 
 ;; predecessor:
@@ -53,6 +65,11 @@
     )
   )
 
+;prueba
+;
+;
+;-------------------------------------------------------------------
+
 ;; suma:
 ;; Propósito:
 (define suma
@@ -62,9 +79,9 @@
         (successor (suma (predecessor x) y)))))
 
 ;prueba
-(suma '(1 1) '(1 1))
-(suma '(0 1) '(1 1))
-
+;(suma '(1 1) '(1 1))
+;(suma '(0 1) '(1 1))
+;-------------------------------------------------------------------
 ;; resta:
 ;; Propósito:
 (define resta
@@ -72,6 +89,11 @@
     (if (is-zero? y)
         x
         (predecessor (resta  x (predecessor y))))))
+
+;prueba
+;
+;
+;-------------------------------------------------------------------
 
 ;; multiplicacion:
 ;; Propósito:
@@ -82,6 +104,11 @@
         (suma (multiplicacion (predecessor x) y) y))
     ))
 
+;prueba
+;
+;
+;-------------------------------------------------------------------
+
 ;; potencia:
 ;; Propósito:    
 (define potencia
@@ -89,6 +116,11 @@
     (if (is-zero? y)
         (successor y)
         (multiplicacion (potencia x (predecessor y)) x))))
+
+;prueba
+;
+;
+;-------------------------------------------------------------------
 
 
 ;; factorial:
@@ -98,3 +130,8 @@
     (if (is-zero? n)
         (successor n)
         (multiplicacion n (factorial (predecessor n))))))
+
+;prueba
+;
+;
+;-------------------------------------------------------------------
