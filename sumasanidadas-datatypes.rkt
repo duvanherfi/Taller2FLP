@@ -11,7 +11,7 @@
 
 ;; define-datatype:
 ;; Propósito:
-(define-datatype suma-aninada suma-anidada?
+(define-datatype suma-anidada suma-anidada?
   (valor (v number?))
   (suma (izq suma-anidada?) (der suma-anidada?))
   )
@@ -42,7 +42,7 @@
 ;; Propósito:
 (define unparse-exp
   (lambda (exp)
-    (cases suma-aninada exp
+    (cases suma-anidada exp
       (valor (v) (list 'valor v))
       (suma (izq der)
                   (list 'suma (unparse-exp izq) (unparse-exp der))
@@ -53,3 +53,13 @@
 ;prueba
 ;
 ;
+;------------------------------------------------------------------------
+(define sum-anidada
+  (lambda (exp)
+    (cases suma-anidada exp
+      (valor (v)  v)
+      (suma (izq der)
+                  (+ (sum-anidada  izq) (sum-anidada der))
+                  )
+      ))
+  )
