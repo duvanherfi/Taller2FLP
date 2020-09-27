@@ -4,8 +4,6 @@
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
 
-;Interfaz: Definición de funciones para sumas anidadas con representación utilizando Data-type
-
 ;suma-anidada ::= <valor> <numero>
 ;             ::=(<suma> suma-anidada suma-anidada)
 
