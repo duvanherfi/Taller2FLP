@@ -21,7 +21,10 @@
       )
     )
   )
-
+;prueba
+;
+;
+;-------------------------------------------------------------------
 ;; define-datatype:
 ;; Propósito:
 (define-datatype pila pila?
@@ -75,9 +78,9 @@
 (define pop-datatype
   (lambda (exp)
     (cases pila exp
-      (empty-stack () empty-stack)
-      (top (p) #f)
-      (push (v p) (push-datatype p))
+      (empty-stack () (empty-stack))
+      (top (p) (pop-datatype (top-datatype p)))
+      (push (v p) p)
       (pop (p) (pop-datatype p))      
       (else #f)
       )
@@ -93,10 +96,10 @@
 (define top-datatype
   (lambda (exp)
     (cases pila exp
-      (empty-stack () empty-stack)
+      (empty-stack () (empty-stack))
       (top (p) (top-datatype p))
       (push (v p) v)
-      (pop (p) (pop-datatype p))      
+      (pop (p) (top-datatype (pop-datatype p)))      
       (else #f)
       )
     )
@@ -111,7 +114,7 @@
 (define push-datatype
   (lambda (exp)
     (cases pila exp
-      (empty-stack () empty-stack)
+      (empty-stack () (empty-stack))
       (top (p) (top-datatype p))
       (push (v p) (push v p))
       (pop (p) (pop-datatype p))      
@@ -124,3 +127,20 @@
 ;
 ;
 ;------------------------------------------------------------------------
+;; empty-stack?:
+;; Propósito:
+(define empty-stack?
+  (lambda (exp)
+    (cases pila exp
+      (empty-stack () #t)
+      (push (v p) #f)
+      (pop (p) (empty-stack? (pop-datatype p)))
+      (top (p) (empty-stack? (top-datatype p)))
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+(empty-stack? (parse-exp '(pop (push x (empty-stack)))))
+;-------------------------------------------------------------------
