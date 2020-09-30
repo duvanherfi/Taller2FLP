@@ -44,9 +44,8 @@
       (nodo (n izq der) (list 'nodo n (unparse-exp izq) (unparse-exp der)))
       ))
   )
-
 ;prueba
-
+#|
 (unparse-exp (parse-exp '(nodo 8
           (nodo 3
                     (nodo 1
@@ -66,5 +65,111 @@
                                         (arbol-vacio)
                                         (arbol-vacio))
                               (arbol-vacio))))))
+|#
+;-------------------------------------------------------------------
+;; extractor-nodo:
+;; Propósito:
+(define extractor-nodo
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () (eopl:error "el arbol está vacío"))
+      (nodo (n izq der) n)
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; estractor-hijo-der:
+;; Propósito:
+(define extractor-hijo-der
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () (eopl:error "el arbol está vacío"))
+      (nodo (n izq der) der)
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; estractor-hijo-izq:
+;; Propósito:
+(define extractor-hijo-izq
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () (eopl:error "el arbol está vacío"))
+      (nodo (n izq der) izq)
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; arbolvacio?:
+;; Propósito:
+(define arbol-vacio?
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () #t)
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; arbol-hoja?:
+;; Propósito:
+(define arbol-hoja?
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () #f)
+      (nodo (n izq der) (and (arbol-vacio? izq) (arbol-vacio? der)))
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; arbol-nodo?:
+;; Propósito:
+(define arbol-nodo?
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () #f)
+      (nodo (n izq der) (or (not (arbol-vacio? izq)) (not (arbol-vacio? der))))
+      (else #f)
+      )
+    )
+  )
+;prueba
+;
+;
+;-------------------------------------------------------------------
+;; validador-orden:
+;; Propósito:
+(define validador-orden
+  (lambda (exp)
+    (cases bin-tree exp
+      (arbol-vacio () (eopl:error "El arbol está vacío"))
+      (nodo (n izq der) (and (> n (extractor-nodo izq)) (< n (extractor-nodo der))
+                             (validador-orden izq) (validador-orden der) ))
+      (else #f)
+      )
+    )
+  )
 
-;------------------------------------------------------------------------
+;prueba
+;
+;
+;-------------------------------------------------------------------
