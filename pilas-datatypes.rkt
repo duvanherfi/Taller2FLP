@@ -4,9 +4,7 @@
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
 ; <Pila> :: 'Pila-vacia
-;        :: push sheme-value <Pila>
-;        :: pop <Pila>
-;        :: top <Pila>
+;        :: push valor? <Pila>
 
 ; empty-stack, push, pop, top, empty-stack?
 
@@ -30,8 +28,6 @@
 (define-datatype pila pila?
   (empty-stack)
   (push (valor valor?) (pila pila?))
-  (pop (pila pila?))
-  (top (pila pila?))
   )
 
 ;prueba
@@ -44,15 +40,14 @@
   (lambda (L)
     (cond
       [(eqv? (car L) 'empty-stack) (empty-stack)]
-      [(eqv? (car L) 'push) (push (cadr L) (parse-exp (caddr L)))]
-      [(eqv? (car L) 'pop) (pop (parse-exp (cadr L)))]
-      [(eqv? (car L) 'top) (top (parse-exp (cadr L)))]
+      [(eqv? (car L) 'push) (push (cadr L) (parse-exp (caddr L)))]      
       [else #f]
       )
     )
   )
 
 ;;prueba
+;
 ;
 ;-------------------------------------------------------------------
 ;; unparse-exp:
@@ -62,8 +57,6 @@
     (cases pila exp
       (empty-stack () (list 'empty-stack))
       (push (v p) (list 'push v (unparse-exp p)))
-      (pop (p) (list 'pop (unparse-exp p)))
-      (top (p) (list 'top (unparse-exp p)))
       (else #f)
       )
     )
@@ -78,10 +71,8 @@
 (define pop-datatype
   (lambda (exp)
     (cases pila exp
-      (empty-stack () (empty-stack))
-      (top (p) (pop-datatype (top-datatype p)))
-      (push (v p) p)
-      (pop (p) (pop-datatype p))      
+      (empty-stack () (eopl:error "No se puede realizar pop en una pila vacía"))      
+      (push (v p) p)      
       (else #f)
       )
     )
@@ -96,10 +87,8 @@
 (define top-datatype
   (lambda (exp)
     (cases pila exp
-      (empty-stack () (empty-stack))
-      (top (p) (top-datatype p))
-      (push (v p) v)
-      (pop (p) (top-datatype (pop-datatype p)))      
+      (empty-stack () (eopl:error "No se puede realizar pop en una pila vacía"))      
+      (push (v p) v)     
       (else #f)
       )
     )
@@ -107,19 +96,13 @@
 
 ;prueba
 ;
-;
+
 ;------------------------------------------------------------------------
 ;; push-datatype:
 ;; Propósito:
 (define push-datatype
-  (lambda (exp)
-    (cases pila exp
-      (empty-stack () (empty-stack))
-      (top (p) (top-datatype p))
-      (push (v p) (push v p))
-      (pop (p) (pop-datatype p))      
-      (else #f)
-      )
+  (lambda (valor stack)
+    (push valor stack)
     )
   )
 
@@ -127,20 +110,18 @@
 ;
 ;
 ;------------------------------------------------------------------------
+
 ;; empty-stack?:
 ;; Propósito:
 (define empty-stack?
   (lambda (exp)
     (cases pila exp
       (empty-stack () #t)
-      (push (v p) #f)
-      (pop (p) (empty-stack? (pop-datatype p)))
-      (top (p) (empty-stack? (top-datatype p)))
       (else #f)
       )
     )
   )
 ;prueba
 ;
-(empty-stack? (parse-exp '(pop (push x (empty-stack)))))
+(empty-stack? (parse-exp '(push x (empty-stack))))
 ;-------------------------------------------------------------------
