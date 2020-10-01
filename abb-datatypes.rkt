@@ -46,25 +46,9 @@
   )
 ;prueba
 #|
-(unparse-exp (parse-exp '(nodo 8
-          (nodo 3
-                    (nodo 1
-                          (arbol-vacio)
-                          (arbol-vacio))
-                    (nodo 6
-                              (nodo 4
-                                    (arbol-vacio)
-                                    (arbol-vacio))
-                              (nodo 7
-                                    (arbol-vacio)
-                                    (arbol-vacio))))
-          (nodo 10
-                    (arbol-vacio)
-                    (nodo 14
-                              (nodo 13
-                                        (arbol-vacio)
-                                        (arbol-vacio))
-                              (arbol-vacio))))))
+(unparse-exp (parse-exp '(nodo 8 (nodo 3 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 6 (nodo 4 (arbol-vacio) (arbol-vacio))
+                              (nodo 7 (arbol-vacio) (arbol-vacio))))
+          (nodo 10 (arbol-vacio) (nodo 14 (nodo 13 (arbol-vacio) (arbol-vacio)) (arbol-vacio))))))
 |#
 ;-------------------------------------------------------------------
 ;; extractor-nodo:
@@ -252,9 +236,3 @@
 ;prueba
 ;(insertar-elemento (nodo 9 (nodo 2 (arbol-vacio) (arbol-vacio)) (arbol-vacio)) 10)
 ;(insertar-elemento (nodo 8 (nodo 3 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 6 (nodo 4 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio)))) (nodo 10 (arbol-vacio) (nodo 14 (nodo 13 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))) 2)
-
-
- (define Arbol_Ejemplo10 (nodo 8 (nodo 3 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 6 (nodo 4 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio)))) (nodo 10 (arbol-vacio) (nodo 14 (nodo 13 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))))
-(define Arbol_Ejemplo7 (nodo 5 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio))))
- (define Arbol_Ejemplo8 (nodo 9 (nodo 2 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))
-(define Arbol_Ejemplomalo3 (nodo 7 (nodo 5 (arbol-vacio) (arbol-vacio)) (nodo 1 (arbol-vacio) (arbol-vacio))))
