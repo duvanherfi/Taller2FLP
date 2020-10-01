@@ -42,6 +42,7 @@
     (cases bin-tree exp
       (arbol-vacio () (list 'arbol-vacio))
       (nodo (n izq der) (list 'nodo n (unparse-exp izq) (unparse-exp der)))
+      (else #f)
       ))
   )
 ;prueba
