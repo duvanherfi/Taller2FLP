@@ -162,14 +162,99 @@
   (lambda (exp)
     (cases bin-tree exp
       (arbol-vacio () (eopl:error "El arbol está vacío"))
-      (nodo (n izq der) (and (> n (extractor-nodo izq)) (< n (extractor-nodo der))
-                             (validador-orden izq) (validador-orden der) ))
+      (nodo (n izq der) (and
+                         (if (arbol-vacio? izq)
+                             #t
+                          (if (> n (extractor-nodo izq))
+                             #t
+                             #f
+                             )                          
+                          )
+                         (if (arbol-vacio? der)
+                             #t
+                          (if (< n (extractor-nodo der))
+                             #t
+                             #f
+                             )                          
+                          )
+                         (if (arbol-vacio? izq)
+                             #t
+                             (if (and (arbol-vacio? (extractor-hijo-izq izq)) (arbol-vacio? (extractor-hijo-der izq)))
+                                 #t
+                                 (validador-orden izq)
+                                 )
+                             )
+                         
+                         (if (arbol-vacio? der)
+                             #t
+                             (if (and (arbol-vacio? (extractor-hijo-izq der)) (arbol-vacio? (extractor-hijo-der der)))
+                                 #t
+                                 (validador-orden der)
+                                 )
+                             )
+                         ))
       (else #f)
       )
     )
   )
 
 ;prueba
+;(validador-orden (nodo 9 (nodo 2 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))
+;(validador-orden (arbol-vacio))
+;-------------------------------------------------------------------
+;; insertar-elemento:
+;; Propósito:
+(define buscar-elemento
+  (lambda (exp num)
+    (cases bin-tree exp
+      (arbol-vacio () #f)
+      (nodo (n izq der) (if (eqv? num n)
+                            #t
+                            (if (< num n)
+                                (buscar-elemento izq num)
+                                (buscar-elemento der num)
+                                )
+                            ))
+      (else #f)
+      )
+    )
+  )
+;prueba
 ;
 ;
 ;-------------------------------------------------------------------
+;; insertar-elemento:
+;; Propósito:
+(define insertar-elemento
+  (lambda (exp num)
+    (if (buscar-elemento exp num)
+        exp
+        (cases bin-tree exp
+          (arbol-vacio () (nodo num (arbol-vacio) (arbol-vacio)))
+          (nodo (n izq der) (if (< num n)
+                                (nodo n (if (arbol-vacio? izq)
+                                            (nodo num (arbol-vacio) (arbol-vacio))
+                                            (insertar-elemento izq num)
+                                            )
+                                      der
+                                      )
+                                (nodo n izq (if (arbol-vacio? der)
+                                                (nodo num (arbol-vacio) (arbol-vacio))
+                                                (insertar-elemento der num)
+                                                )                                      
+                                      )
+                                ))
+          (else #f)
+          )
+        )
+    )
+  )
+;prueba
+;(insertar-elemento (nodo 9 (nodo 2 (arbol-vacio) (arbol-vacio)) (arbol-vacio)) 10)
+;(insertar-elemento (nodo 8 (nodo 3 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 6 (nodo 4 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio)))) (nodo 10 (arbol-vacio) (nodo 14 (nodo 13 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))) 2)
+
+
+ (define Arbol_Ejemplo10 (nodo 8 (nodo 3 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 6 (nodo 4 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio)))) (nodo 10 (arbol-vacio) (nodo 14 (nodo 13 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))))
+(define Arbol_Ejemplo7 (nodo 5 (nodo 1 (arbol-vacio) (arbol-vacio)) (nodo 7 (arbol-vacio) (arbol-vacio))))
+ (define Arbol_Ejemplo8 (nodo 9 (nodo 2 (arbol-vacio) (arbol-vacio)) (arbol-vacio)))
+(define Arbol_Ejemplomalo3 (nodo 7 (nodo 5 (arbol-vacio) (arbol-vacio)) (nodo 1 (arbol-vacio) (arbol-vacio))))
