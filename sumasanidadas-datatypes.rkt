@@ -35,7 +35,7 @@
 ;-------------------------------------------------------------------
 
 ;; unparse-exp:
-;; Propósito:
+;; Propósito: función que recibe una estructura suma-anidada y retorna una lista 
 (define unparse-exp
   (lambda (exp)
     (cases suma-anidada exp
