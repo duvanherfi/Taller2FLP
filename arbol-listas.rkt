@@ -181,8 +181,6 @@
 
 ;-------------------------------------------------------------------
 
-
-
 ;;;;;;;;;;;; DEFINICIÓN DE ÁRBOLES ;;;;;;;;;;;;;;;;;;;;;
 
 (define Arbol_Ejemplo1 (nodo 5 (nodo 1 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) 

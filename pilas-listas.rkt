@@ -7,8 +7,8 @@
 
 ;;;;;;;;;;;; GRAMÁTICA ;;;;;;;;;;;;;;;;;;;;;
 
-; <árbol-binario> := ('vacio)
-;                 := ('nodo <numero> <árbol-binario> <árbol-binario>)
+; <Pila> :: ('empty-stack)
+;        :: ('stack scheme-value <Pila>)
 
 ;----------------------------------------------------------------------------
 
