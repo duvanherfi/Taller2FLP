@@ -4,11 +4,13 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
+
+;;;;;;;;;;;; GRAMÁTICA ;;;;;;;;;;;;;;;;;;;;;
+
 ; <árbol-binario> := ('vacio)
 ;                 := ('nodo <numero> <árbol-binario> <árbol-binario>)
 
-
-;;;; CONSTRUCTORES
+;----------------------------------------------------------------------------
 
 ;; define vacio:
 ;; Propósito: Función que crea un árbol vacío
