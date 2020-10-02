@@ -4,15 +4,14 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
-
-;;;;;;;;;;;; GRAMÁTICA ;;;;;;;;;;;;;;;;;;;;;
+;******************************Gramatica*************************************
 
 ; <Pila> :: ('empty-stack)
 ;        :: ('stack scheme-value <Pila>)
 
 ;----------------------------------------------------------------------------
 
-;; define empty-stack
+;; empty-stack:
 ;; Propósito: Función que crea un stack vacío
 
 (define empty-stack
@@ -23,7 +22,7 @@
 ;(empty-stack) ; retorna (empty-stack)
 
 ;-------------------------------------------------------------------
-;; define empty-stack?
+;; empty-stack?:
 ;; Propósito: Función que verifica si un stack está vacío
 
 (define empty-stack?
@@ -34,7 +33,7 @@
 ;(vacio) ; retorna (vacio)
 
 ;-------------------------------------------------------------------
-;; define push
+;; push:
 ;; Propósito: Función que agrega un valor a la pila
 
 (define push
@@ -47,7 +46,7 @@
 ;(push 10 (push 3 (empty-stack))) ; retorna (stack 10 (stack 3 (empty-stack)))
 
 ;-------------------------------------------------------------------
-;; define pop
+;; pop:
 ;; Propósito: Función que quita un valor a la pila
 
 (define pop
@@ -64,7 +63,7 @@
 ;(pop (empty-stack)) retorna "No se puede sacar elementos de una pila vacía"
 
 ;-------------------------------------------------------------------
-;; define nodo
+;; top:
 ;; Propósito: Función que muestra el último valor agregado a la pila
 
 (define top
@@ -79,8 +78,4 @@
 
 ;(top p) ; retorna 5
 ;(top (empty-stack)) ; retorna "La pila está vacía"
-
-;-------------------------------------------------------------------
-
-(define p
-  (push 5 (push 6 (push 10 (empty-stack)))))
+;(define p (push 5 (push 6 (push 10 (empty-stack)))))

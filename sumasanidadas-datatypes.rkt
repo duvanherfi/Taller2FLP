@@ -3,24 +3,21 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
-
+;******************************Gramatica*************************************
 ;suma-anidada ::= <valor> <numero>
 ;             ::=(<suma> suma-anidada suma-anidada)
 
 ;; define-datatype:
-;; Propósito:
+;; Propósito: se define un datatype suma-anidada
 (define-datatype suma-anidada suma-anidada?
   (valor (v number?))
   (suma (izq suma-anidada?) (der suma-anidada?))
   )
 
-;prueba
-;
-;
 ;-------------------------------------------------------------------
 
 ;; parse-exp:
-;; Propósito:
+;; Propósito: función que recibe una lista y la convierte a una estructura
 (define parse-exp
   (lambda (L)
     (cond
@@ -34,6 +31,7 @@
 
 ;;prueba
 ;(parse-exp '(suma (valor 5) (valor 6)))
+;(parse-exp '(suma (valor 5) (suma (valor 5) (valor 6))))
 ;-------------------------------------------------------------------
 
 ;; unparse-exp:
@@ -49,8 +47,8 @@
   )
 
 ;prueba
-;
-;
+;(unparse-exp (parse-exp '(suma (valor 5) (valor 6))))
+;(unparse-exp (parse-exp '(suma (valor 5) (suma (valor 5) (valor 6)))))
 ;------------------------------------------------------------------------
 (define sum-anidada
   (lambda (exp)
@@ -61,3 +59,7 @@
                   )
       ))
   )
+
+;prueba
+;(sum-anidada (parse-exp '(suma (valor 5) (suma (valor 5) (valor 6)))))
+;(sum-anidada (parse-exp '(suma (valor 5) (valor 6))))

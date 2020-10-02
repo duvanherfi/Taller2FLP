@@ -4,15 +4,14 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
-
-;;;;;;;;;;;; GRAMÁTICA ;;;;;;;;;;;;;;;;;;;;;
+;******************************Gramatica*************************************
 
 ; <Pila> :: ('Pila-vacia)
 ;        :: ('Pila-valor scheme-value <Pila>)
 
 ;----------------------------------------------------------------------------
 
-;; define empty-stack
+;; empty-stack:
 ;; Propósito: Función que crea un stack vacío y retorna un procedimiento
 
 (define empty-stack-proc
@@ -30,7 +29,7 @@
 ;(empty-stack) ; retorna un procedimiento
 
 ;-------------------------------------------------------------------
-;; define push-proc
+;; push-proc:
 ;; Propósito: Función que recibe un valor y una pila y agrega el valor a a pila. retorna un procedimiento
 
 (define push-proc
@@ -47,7 +46,7 @@
 ;(push-proc 10 (empty-stack-proc)) ; retorna un procedimiento
 
 ;-------------------------------------------------------------------
-;; define pop-proc
+;; pop-proc:
 ;; Propósito: Función que recibe una pila, quita el último elemento agregado y retorna un procedimiento
 
 (define pop-proc
@@ -59,7 +58,7 @@
 ;(pop-proc (push-proc 6 (push-proc 10 (empty-stack-proc)))) ; retorna un procedimiento
 
 ;-------------------------------------------------------------------
-;; define top-proc
+;; top-proc:
 ;; Propósito: Función que recibe una pila y muestra el valor del último elemento agregado a la pila
 
 (define top-proc
@@ -69,7 +68,4 @@
 ;prueba
 ;(top-proc p) ; retorna 5
 ;(top-proc (push-proc 6 (push-proc 10 (empty-stack-proc)))) ; retorna 6
-
-;-------------------------------------------------------------------
-
-(define p (push-proc 5 (push-proc 6 (push-proc 10 (empty-stack-proc)))))
+;(define p (push-proc 5 (push-proc 6 (push-proc 10 (empty-stack-proc)))))

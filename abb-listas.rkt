@@ -4,15 +4,14 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
-
-;;;;;;;;;;;; GRAMÁTICA ;;;;;;;;;;;;;;;;;;;;;
+;******************************Gramatica*************************************
 
 ; <árbol-binario> := ('vacio)
 ;                 := ('nodo <numero> <árbol-binario> <árbol-binario>)
 
 ;----------------------------------------------------------------------------
 
-;; define vacio:
+;; vacio:
 ;; Propósito: Función que crea un árbol vacío
 
 (define vacio
@@ -21,9 +20,8 @@
 
 ;prueba
 ;(vacio) ; retorna (vacio)
-
 ;-------------------------------------------------------------------
-;; define nodo
+;; nodo
 ;; Propósito: Función que crea un nodo
 
 (define nodo
@@ -35,7 +33,7 @@
 ;(nodo 10 (vacio) (vacio)) ; retorna (nodo 10 (vacio) (vacio))
 
 ;-------------------------------------------------------------------
-;; define extractor-nodo
+;; extractor-nodo
 ;; Propósito: Función que extrae el valor del nodo
 
 (define extractor-nodo
@@ -50,7 +48,7 @@
 ;(extractor-nodo Arbol_Ejemplo6) ; retorna "El nodo está vacío"
 ;
 ;-------------------------------------------------------------------
-;; define extractor-hijoizq
+;; extractor-hijoizq
 ;; Propósito: Función que extrae el hijo izquierdo del árbol. Retorna "No tiene hijos" si se le ingresa una hoja (vacio) 
 
 (define extractor-hijoizq
@@ -65,7 +63,7 @@
 ;(extractor-hijoizq Arbol_Ejemplo6) ; retorna "No tiene hijos"
 ;
 ;-------------------------------------------------------------------
-;; define extractor-hijoder
+;; extractor-hijoder
 ;; Propósito: Función que extrae el hijo derecho del árbol. Retorna "No tiene hijos" si se le ingresa una hoja (vacio)
 
 (define extractor-hijoder
@@ -80,7 +78,7 @@
 ;(extractor-hijoizq Arbol_Ejemplo6) ; retorna "No tiene hijos"
 
 ;-------------------------------------------------------------------
-;; define arbol-vacio?
+;; arbol-vacio?
 ;; Propósito:  Función que verifica si un árbol está vacío
 
 ; Predicados
@@ -95,7 +93,7 @@
 ;(arbol-vacio? Arbol_Ejemplo6) ; retorna #t
 
 ;-------------------------------------------------------------------
-;; define arbol-hoja?
+;; arbol-hoja?
 ;; Propósito: Función que verifica si un árbol es una hoja
 
 (define arbol-hoja?
@@ -111,7 +109,7 @@
 ;(arbol-hoja? Arbol_Ejemplo3) ; retorna #t
 
 ;-------------------------------------------------------------------
-;; define arbol-nodo?
+;; arbol-nodo?
 ;; Propósito: Función que verifica si un árbol es un nodo
 
 (define arbol-nodo?
@@ -128,7 +126,7 @@
 ;(arbol-nodo? Arbol_Ejemplo3) ; retorna #f
 ;
 ;-------------------------------------------------------------------
-;; define validador-orden-bst
+;; validador-orden-bst
 ;; Propósito: Función que valida si un árbol se encuentra ordenado
 
 (define validador-orden-bst
@@ -151,7 +149,7 @@
 ;(validador-orden-bst Arbol_Ejemplomalo) ; retorna #f
 
 ;-------------------------------------------------------------------
-;; define insertar-elemento-abb
+;; insertar-elemento-abb
 ;; Propósito: Función que inserta un elemento en un árbol binario de búsqueda
 
 (define insertar-elemento-abb
@@ -182,10 +180,11 @@
 ;-------------------------------------------------------------------
 
 ;;;;;;;;;;;; DEFINICIÓN DE ÁRBOLES ;;;;;;;;;;;;;;;;;;;;;
-
+#|
 (define Arbol_Ejemplo1 (nodo 5 (nodo 1 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) 
 (define Arbol_Ejemplo2 (nodo 9 (nodo 2 (vacio) (vacio)) (vacio)))
 (define Arbol_Ejemplo3 (nodo 5 (vacio) (vacio))) 
 (define Arbol_Ejemplo4 (nodo 8 (nodo 3 (nodo 1 (vacio) (vacio)) (nodo 6 (nodo 4 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) (nodo 10 (vacio) (nodo 14 (nodo 13 (vacio) (vacio)) (vacio))))) 
 (define Arbol_Ejemplo6 (vacio))
 (define Arbol_Ejemplomalo (nodo 7 (nodo 5 (vacio) (vacio)) (nodo 1 (vacio) (vacio))))
+|#

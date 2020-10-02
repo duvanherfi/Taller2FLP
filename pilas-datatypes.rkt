@@ -3,13 +3,14 @@
 ;;DUVAN HERNANDEZ FIGUEROA     - 202010009
 ;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
 ;----------------------------------------------------------------------------
+;******************************Gramatica*************************************
+
 ; <Pila> :: 'Pila-vacia
 ;        :: push valor? <Pila>
-
-; empty-stack, push, pop, top, empty-stack?
+;----------------------------------------------------------------------------
 
 ;; valor?:
-;; Propósito:
+;; Propósito: funcion predicado que retorna #t si v es un número un symbol
 (define valor?
   (lambda (v)
     (cond
@@ -20,22 +21,18 @@
     )
   )
 ;prueba
-;
-;
+;(valor? '())
+;(valor? 5)
 ;-------------------------------------------------------------------
 ;; define-datatype:
-;; Propósito:
+;; Propósito: funcion que define un datatype pila
 (define-datatype pila pila?
   (empty-stack)
   (push (valor valor?) (pila pila?))
   )
-
-;prueba
-;
-;
 ;-------------------------------------------------------------------
 ;; parse-exp:
-;; Propósito:
+;; Propósito: función que recibe una lista y retorna una estructura pila
 (define parse-exp
   (lambda (L)
     (cond
@@ -47,11 +44,11 @@
   )
 
 ;;prueba
-;
-;
+;(parse-exp '(push 10 (empty-stack)))
+;(parse-exp '(empty-stack))
 ;-------------------------------------------------------------------
 ;; unparse-exp:
-;; Propósito:
+;; Propósito: función que recibe una estructura pila y retorna una lista 
 (define unparse-exp
   (lambda (exp)
     (cases pila exp
@@ -63,11 +60,11 @@
   )
 
 ;prueba
-;
-;
+;(unparse-exp (parse-exp '(push 10 (empty-stack))))
+;(unparse-exp (parse-exp '(empty-stack)))
 ;------------------------------------------------------------------------
 ;; pop-datatype:
-;; Propósito:
+;; Propósito: función que elimina el ultimo elemento ingresado en la pila
 (define pop-datatype
   (lambda (exp)
     (cases pila exp
@@ -79,11 +76,11 @@
   )
 
 ;prueba
-;
-;
+;(pop-datatype (parse-exp '(push 5(push 10 (empty-stack)))))
+;(pop-datatype (parse-exp '(push 10 (empty-stack))))
 ;------------------------------------------------------------------------
 ;; pop-datatype:
-;; Propósito:
+;; Propósito: función que retorna el ultimo elemento que se ingresó en la pila
 (define top-datatype
   (lambda (exp)
     (cases pila exp
@@ -95,8 +92,8 @@
   )
 
 ;prueba
-;
-
+;(top-datatype (parse-exp '(push 5(push 10 (empty-stack)))))
+;(top-datatype (parse-exp '(push 10 (empty-stack))))
 ;------------------------------------------------------------------------
 ;; push-datatype:
 ;; Propósito:
@@ -107,8 +104,8 @@
   )
 
 ;prueba
-;
-;
+;(push-datatype 5 (empty-stack))
+;(push-datatype 4 (push 5 (empty-stack)))
 ;------------------------------------------------------------------------
 
 ;; empty-stack?:
@@ -122,6 +119,6 @@
     )
   )
 ;prueba
-;
-(empty-stack? (parse-exp '(push x (empty-stack))))
+;(empty-stack? (empty-stack))
+;(empty-stack? (parse-exp '(push x (empty-stack))))
 ;-------------------------------------------------------------------

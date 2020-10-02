@@ -6,27 +6,27 @@
 ;----------------------------------------------------------------------------
 
 ;; zero:
-;; Propósito:
+;; Propósito: función que retorna una lista vacía en representación del zero
 (define zero
   (lambda ()
     '()))
 
 ;prueba
 ;(zero)
-;---------------------------------------------------------
+;----------------------------------------------------------------------------
 ;; is-zero?:
-;; Propósito:
+;; Propósito: Función que retorna #t si la lista es zero.
 (define is-zero?
   (lambda (n)
     (null? n)))
 
 ;prueba
-;
-;
-;----------------------------------------------------------
+;(is-zero? '())
+;(is-zero? '(1))
+;----------------------------------------------------------------------------
 
 ;; successor:
-;; Propósito:
+;; Propósito: función que recibe una lista bignum en base 16 y retorna el sucesor de dicha lista
 (define successor
   (lambda (n)
     (if (is-zero? n)
@@ -41,13 +41,13 @@
     )
   )
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(successor '())
+;(successor '(1 1))
+;----------------------------------------------------------------------------
 
 
 ;; predecessor:
-;; Propósito:
+;; Propósito: función que recibe una lista bignum en base 16 y retorna el predecesor de dicha lista
 (define predecessor
   (lambda (n)
     (cond
@@ -66,9 +66,9 @@
   )
 
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(predecessor '())
+;(predecessor '(1 1))
+;----------------------------------------------------------------------------
 
 ;; suma:
 ;; Propósito:
@@ -81,7 +81,7 @@
 ;prueba
 ;(suma '(1 1) '(1 1))
 ;(suma '(0 1) '(1 1))
-;-------------------------------------------------------------------
+;----------------------------------------------------------------------------
 ;; resta:
 ;; Propósito:
 (define resta
@@ -91,9 +91,9 @@
         (predecessor (resta  x (predecessor y))))))
 
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(resta '(1 1) '(1 2))
+;(resta '(0 1) '(1 1))
+;----------------------------------------------------------------------------
 
 ;; multiplicacion:
 ;; Propósito:
@@ -105,9 +105,9 @@
     ))
 
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(multiplicacion '(1 1) '(1 2))
+;(multiplicacion '(0 1) '(1 1))
+;----------------------------------------------------------------------------
 
 ;; potencia:
 ;; Propósito:    
@@ -118,9 +118,9 @@
         (multiplicacion (potencia x (predecessor y)) x))))
 
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(potencia '(1 1) '(2))
+;(potencia '(15) '(2)) 
+;----------------------------------------------------------------------------
 
 
 ;; factorial:
@@ -132,6 +132,5 @@
         (multiplicacion n (factorial (predecessor n))))))
 
 ;prueba
-;
-;
-;-------------------------------------------------------------------
+;(factorial '(5))
+;(factorial '(7))
