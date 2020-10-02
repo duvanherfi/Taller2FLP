@@ -1,40 +1,100 @@
 #lang eopl
 
+;;JUAN SEBASTIAN GRAJALES CRUZ - 202010004
+;;DUVAN HERNANDEZ FIGUEROA     - 202010009
+;;DIEGO FERNANDO MUÑOZ ARCE    - 202010032
+;----------------------------------------------------------------------------
 ; <árbol-binario> := ('vacio)
 ;                 := ('nodo <numero> <árbol-binario> <árbol-binario>)
 
 
 ;;;; CONSTRUCTORES
 
+;; define vacio:
+;; Propósito: Función que crea un árbol vacío
+
 (define vacio
   (lambda ()
     (list 'vacio)))
+
+;prueba
+;(vacio) ; retorna (vacio)
+
+;-------------------------------------------------------------------
+;; define nodo
+;; Propósito: Función que crea un nodo
 
 (define nodo
   (lambda (num h1 h2)
     (list 'nodo num h1 h2)))
 
-;;;; OBSERVADORES
+;prueba
+;(nodo 4 (vacio) (vacio)) ; retorna (nodo 4 (vacio) (vacio))
+;(nodo 10 (vacio) (vacio)) ; retorna (nodo 10 (vacio) (vacio))
 
-; Extractores
+;-------------------------------------------------------------------
+;; define extractor-nodo
+;; Propósito: Función que extrae el valor del nodo
 
 (define extractor-nodo
   (lambda (arbol)
-    (cadr arbol)))
+    (if (arbol-vacio? arbol)
+        (eopl:error "El nodo está vacío")
+        (cadr arbol))))
+
+;pruebas:
+
+;(extractor-nodo Arbol_Ejemplo4) ; retorna 8
+;(extractor-nodo Arbol_Ejemplo6) ; retorna "El nodo está vacío"
+;
+;-------------------------------------------------------------------
+;; define extractor-hijoizq
+;; Propósito: Función que extrae el hijo izquierdo del árbol. Retorna "No tiene hijos" si se le ingresa una hoja (vacio) 
 
 (define extractor-hijoizq
   (lambda (arbol)
-    (caddr arbol)))
+    (if (arbol-vacio? arbol)
+        (eopl:error "No tiene hijos")
+        (caddr arbol))))
+
+;pruebas:
+
+;(extractor-hijoizq Arbol_Ejemplo1) ; retorna (nodo 1 (vacio) (vacio))
+;(extractor-hijoizq Arbol_Ejemplo6) ; retorna "No tiene hijos"
+;
+;-------------------------------------------------------------------
+;; define extractor-hijoder
+;; Propósito: Función que extrae el hijo derecho del árbol. Retorna "No tiene hijos" si se le ingresa una hoja (vacio)
 
 (define extractor-hijoder
   (lambda (arbol)
-    (cadddr arbol)))
+    (if (arbol-vacio? arbol)
+        (eopl:error "No tiene hijos")
+        (cadddr arbol))))
+
+;pruebas:
+
+;(extractor-hijoder Arbol_Ejemplo4) ; retorna (nodo 10 (vacio) (nodo 14 (nodo 13 (vacio) (vacio)) (vacio)))
+;(extractor-hijoizq Arbol_Ejemplo6) ; retorna "No tiene hijos"
+
+;-------------------------------------------------------------------
+;; define arbol-vacio?
+;; Propósito:  Función que verifica si un árbol está vacío
 
 ; Predicados
 
 (define arbol-vacio?
         (lambda (arbol)
           (equal? (car arbol) 'vacio)))
+
+;pruebas:
+
+;(arbol-vacio? Arbol_Ejemplo1) ; retorna #f
+;(arbol-vacio? Arbol_Ejemplo6) ; retorna #t
+
+;-------------------------------------------------------------------
+;; define arbol-hoja?
+;; Propósito: Función que verifica si un árbol es una hoja
 
 (define arbol-hoja?
         (lambda (arbol)
@@ -43,6 +103,15 @@
            (equal? (caaddr arbol) 'vacio)
            (equal? (caar (cdddr arbol)) 'vacio))))
 
+;prueba
+
+;(arbol-hoja? Arbol_Ejemplo1) ; retorna #f
+;(arbol-hoja? Arbol_Ejemplo3) ; retorna #t
+
+;-------------------------------------------------------------------
+;; define arbol-nodo?
+;; Propósito: Función que verifica si un árbol es un nodo
+
 (define arbol-nodo?
         (lambda (arbol)
           (and
@@ -50,6 +119,15 @@
            (or
             (equal? (caaddr arbol) 'nodo)
             (equal? (caar (cdddr arbol)) 'nodo)))))
+
+;prueba
+
+;(arbol-nodo? Arbol_Ejemplo1) ; retorna #t
+;(arbol-nodo? Arbol_Ejemplo3) ; retorna #f
+;
+;-------------------------------------------------------------------
+;; define validador-orden-bst
+;; Propósito: Función que valida si un árbol se encuentra ordenado
 
 (define validador-orden-bst
   (lambda (arbol)
@@ -63,46 +141,47 @@
         (if(arbol-vacio? (extractor-hijoizq arbol)) #t (validador-orden-bst (extractor-hijoizq arbol)))
         (if(arbol-vacio? (extractor-hijoder arbol)) #t (validador-orden-bst (extractor-hijoder arbol))))]
       [else #f])))
-#|
+
+;prueba
+
+;(validador-orden-bst Arbol_Ejemplo1) ; retorna #t
+;(validador-orden-bst Arbol_Ejemplo6) ; retorna Error: esta ingresando un arbol vacio
+;(validador-orden-bst Arbol_Ejemplomalo) ; retorna #f
+
+;-------------------------------------------------------------------
+;; define insertar-elemento-abb
+;; Propósito: Función que inserta un elemento en un árbol binario de búsqueda
+
 (define insertar-elemento-abb
   (lambda (arbol num)
     (cond
       [(arbol-vacio? arbol) (nodo num (vacio) (vacio))]
-      [(arbol-hoja? arbol) 
-       (if(< num (cadr arbol))
-          (nodo (cadr arbol) (insertar-elemento-abb (caddr arbol) num) (vacio))
-          (nodo (cadr arbol) (vacio) (insertar-elemento-abb (caddr arbol) num)))]
-      [else (if
-        (arbol-vacio? (extractor-hijoizq arbol))
-        (if
-         (< num (cadr arbol))
-         (nodo (cadr arbol) (insertar-elemento-abb (caddr arbol) num) (cadddr arbol))
-         (#f))
-        (if
-         (< num (cadr arbol))
-         (cons (car arbol) (cons (cadr arbol) (cons (insertar-elemento-abb (caddr arbol) num) (cdddr arbol))))
-         (cons (car arbol) (cons (cadr arbol) (cons (caddr arbol) (insertar-elemento-abb (cadddr arbol) num))))
-         ))])))
-|#
-(define insertar-elemento-abb
-  (lambda (arbol num)
-    (cond
-      [(arbol-vacio? arbol) (nodo num (vacio) (vacio))]
-      [(arbol-hoja? arbol) 
-       (if(< num (cadr arbol))
-          (nodo (cadr arbol) (insertar-elemento-abb (caddr arbol) num) (vacio))
-          (nodo (cadr arbol) (vacio) (insertar-elemento-abb (caddr arbol) num)))]
+      [(arbol-hoja? arbol)
+       (if (= num (cadr arbol))
+        arbol
+        (if(< num (cadr arbol))
+           (nodo (cadr arbol) (insertar-elemento-abb (caddr arbol) num) (vacio))
+           (nodo (cadr arbol) (vacio) (insertar-elemento-abb (caddr arbol) num))))]
+      [else
+       (if (= num (cadr arbol))
+           arbol
+           (if
+             (< num (cadr arbol))
+             (cons (car arbol) (cons (cadr arbol) (cons (insertar-elemento-abb (caddr arbol) num) (cdddr arbol))))
+             (cons (car arbol) (cons (cadr arbol) (cons (caddr arbol) (insertar-elemento-abb (cadddr arbol) num))))))])))
+
+;prueba
+
+;(insertar-elemento-abb Arbol_Ejemplo4 10) ; (nodo 8 (nodo 3 (nodo 1 (vacio) (vacio)) (nodo 6 (nodo 4 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) (nodo 10 (vacio) (nodo 14 (nodo 13 (vacio) (vacio)) (vacio))))
+;(insertar-elemento-abb Arbol_Ejemplo4 2) ; (nodo 8 (nodo 3 (nodo 1 (vacio) (nodo 2 (vacio) (vacio))) (nodo 6 (nodo 4 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) (nodo 10 (vacio) (nodo 14 (nodo 13 (vacio) (vacio)) (vacio))))
+;(insertar-elemento-abb Arbol_Ejemplo3 5) ; (nodo 5 (vacio) (vacio))) 
+;(insertar-elemento-abb Arbol_Ejemplo6 5) ; (nodo 5 (vacio) (vacio)))
+
+;-------------------------------------------------------------------
 
 
 
-      
-      [(> (value tree) n) (merge (insert (left tree) n) (value tree)(right tree))] ; internal - go left
-      [(< (value tree) n) (merge (left tree) (value tree) (insert (right tree) n))] ; internal - go right
-      ;[(eq? (value tree) n) tree] ; internal - n already in tree
-    )
-  )
-
-(define ab '(1 2 3 4))
+;;;;;;;;;;;; DEFINICIÓN DE ÁRBOLES ;;;;;;;;;;;;;;;;;;;;;
 
 (define Arbol_Ejemplo1 (nodo 5 (nodo 1 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) 
 (define Arbol_Ejemplo2 (nodo 9 (nodo 2 (vacio) (vacio)) (vacio)))
@@ -110,22 +189,3 @@
 (define Arbol_Ejemplo4 (nodo 8 (nodo 3 (nodo 1 (vacio) (vacio)) (nodo 6 (nodo 4 (vacio) (vacio)) (nodo 7 (vacio) (vacio)))) (nodo 10 (vacio) (nodo 14 (nodo 13 (vacio) (vacio)) (vacio))))) 
 (define Arbol_Ejemplo6 (vacio))
 (define Arbol_Ejemplomalo (nodo 7 (nodo 5 (vacio) (vacio)) (nodo 1 (vacio) (vacio))))
-
-
-;Extractores del valor del nodo, del hijo izquierdo y del hijo derecho(1 punto c/u - Total 3)
-(extractor-hijoizq Arbol_Ejemplo1) ; retorna (1 () ())
-(extractor-hijoder Arbol_Ejemplo4) ; retorna (10 () (14 (13 () ()) ()))
-(extractor-nodo Arbol_Ejemplo4) ; retorna 8
-
-;Predicados: ́arbol-vacio?, ́arbol-hoja?, ́arbol-nodo? (1 punto c/u - Total 3)
-(arbol-hoja? Arbol_Ejemplo1) ; retorna #f
-(arbol-nodo? Arbol_Ejemplo1) ; retorna #t
-(arbol-vacio? Arbol_Ejemplo1) ; retorna #f
-
-; Validar orden e insertar elemento (2 puntos c/u - Total 10)
-(validador-orden-bst Arbol_Ejemplo1) ; retorna #t
-;(validador-orden-bst Arbol_Ejemplo6) ; retorna Error: esta ingresando un arbol vacio
-(validador-orden-bst Arbol_Ejemplomalo) ; retorna #f
-
-;(insertar-elemento-abb Arbol_Ejemplo4 10) ; (8 (3 (1 () ()) (6 (4 () ()) (7 () ()))) (10 () (14 (13 () ()) ())))
-;(insertar-elemento-abb Arbol_Ejemplo4 2) ; (8 (3 (1 () (2 () ())) (6 (4 () ()) (7 () ()))) (10 () (14 (13 () ()) ())))
